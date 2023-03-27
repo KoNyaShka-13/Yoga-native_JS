@@ -84,7 +84,7 @@ window.addEventListener('DOMContentLoaded', function() {//Пишем так, ч�
 
     setClock('timer', deadLine);
 
-    //Modal window
+    //Модальное окно
 
     let more = document.querySelector('.more'),//Кнопка, при нажатии которой будет вылазить модальное окно
         overlay = document.querySelector('.overlay'),//Модальное окно
@@ -101,4 +101,15 @@ window.addEventListener('DOMContentLoaded', function() {//Пишем так, ч�
         more.classList.remove('more-splash');//This не подходит, так как обращаемся не к крестику, а к модальному окну
         document.body.style.overflow = '';//Снимаем запрет скроллинга
     });
+
+    //Модальные окна для табов
+    let btn = document.querySelectorAll('.description-btn');
+
+        btn.forEach(btn => {
+        btn.addEventListener('click', ()=> {
+        overlay.style.display = 'block';
+        });
+    });
+
+
 });
