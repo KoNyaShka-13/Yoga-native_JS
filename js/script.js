@@ -83,4 +83,22 @@ window.addEventListener('DOMContentLoaded', function() {//Пишем так, ч�
     };
 
     setClock('timer', deadLine);
+
+    //Modal window
+
+    let more = document.querySelector('.more'),//Кнопка, при нажатии которой будет вылазить модальное окно
+        overlay = document.querySelector('.overlay'),//Модальное окно
+        close = document.querySelector('.popup-close');//Крестик для закрытия модального окна
+    
+    more.addEventListener('click', function() {
+        overlay.style.display = 'block';//Чтобы окно появилось
+        this.classList.add('more-splash');//This, то есть обращается к этому же элементу
+        document.body.style.overflow = 'hidden';//Запрещаем скролить страницу, пока открыто модальное окно
+    });
+
+    close.addEventListener('click', function() {
+        overlay.style.display = 'none';//Убираем окно
+        more.classList.remove('more-splash');//This не подходит, так как обращаемся не к крестику, а к модальному окну
+        document.body.style.overflow = '';//Снимаем запрет скроллинга
+    });
 });
