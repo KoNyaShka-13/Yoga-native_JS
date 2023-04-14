@@ -22,8 +22,9 @@ window.addEventListener('DOMContentLoaded', function() {//Пишем так, ч�
     };
 
     //Скрываем не нужный и открываем нужный таб
-    info.addEventListener('click', function(event) {
-        let target = event.target;//Связываем слайд с ссылкой выше
+
+    info.addEventListener('click', (e) => {
+        let target = e.target;//Связываем слайд с ссылкой выше
         if (target && target.classList.contains('info-header-tab')) {
             for(let i = 0; i < tab.length; i++) {//Функция для проверки, что ссылка и слайд нужные
                 if (target == tab[i]) {//Не нужное убираем, нужное включаем
@@ -36,9 +37,25 @@ window.addEventListener('DOMContentLoaded', function() {//Пишем так, ч�
 
     });
 
-    //Timer
+    // прокрутка (scroll)
 
-    let deadLine = '2023-03-21';
+    let goTo = document.querySelectorAll('.container ul li a');
+
+    goTo.forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          let blockID = item.getAttribute('href');
+          document.querySelector('' + blockID).scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        });
+      })
+
+    
+    //Timer
+      
+    let deadLine = '2023-04-10';
 
     function getTimeRemaining(endtime) {
         let t = (Date.parse(endtime) > Date.parse(new Date())) ? Date.parse(endtime) - Date.parse(new Date()) : 0,//Получаем количество милисекунд от настоящего времени до конца дед лайна
@@ -59,6 +76,7 @@ window.addEventListener('DOMContentLoaded', function() {//Пишем так, ч�
     };
 
     //Превращаем статичную верстку в динамичную
+
     function setClock(id, endtime) {//Присваиваем и обновляем время каждую секунду
         let timer = document.getElementById(id),
             hours = document.querySelector('.hours'),
@@ -72,12 +90,11 @@ window.addEventListener('DOMContentLoaded', function() {//Пишем так, ч�
             minutes.textContent = t.minutes;
             seconds.textContent = t.seconds;
 
-            if (t.total <= 0) {
-                clearInterval(timeInterval);
-                hours.textContent = '00';
-                minutes.textContent = '00';
-                seconds.textContent = '00';
-            };
+            if (t.total <= 0) //Для примера упростил и сделал стрелочную функцию
+                () => clearInterval(timeInterval);
+                () => hours.textContent = '00';
+                () => minutes.textContent = '00';
+                () => seconds.textContent = '00';
         };
 
     };
@@ -103,6 +120,7 @@ window.addEventListener('DOMContentLoaded', function() {//Пишем так, ч�
     });
 
     //Модальные окна для табов
+    
     let btn = document.querySelectorAll('.description-btn');
 
         btn.forEach(btn => {
@@ -110,6 +128,4 @@ window.addEventListener('DOMContentLoaded', function() {//Пишем так, ч�
         overlay.style.display = 'block';
         });
     });
-
-
 });
