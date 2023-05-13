@@ -178,52 +178,14 @@ window.addEventListener('DOMContentLoaded', function() {//Пишем так, ч�
 //        };
 //    });
 
-    //Отправка и получение данных от контактного окна
- //   
-//    let forma = document.getElementById('form');
-//        
-//        
-//        forma.addEventListener('submit', function(event) {//Чтобы действие сработало, нужно ставить его на форму, а не на саму кнопку
-//            event.preventDefault();//Отменяем нормальную работу js, чтобы не обновлялась страница при отправке запроса, в большинстве случаев, отменяют работу в AJAX запросах
-//            forma.appendChild(statusMessage);
-//    
-//            let request = new XMLHttpRequest();
-//            request.open('POST', 'server.php');
-//            request.setRequestHeader ('Content-Type', 'application/x-www-form-urlencoded');
-//    
-//            let formData = new FormData(form);//Переделываем данные в JSON формат
-//            let obj = {};
-//            formData.forEach(function(value, key) {
-//                obj[key] = value;
-//            });
-//            let json = JSON.stringify(obj);
-//    
-//            request.send(formData);
-//    
-//            request.addEventListener('readystatechange', function() {//Отправка уведомления в зависимости от ситуации
-//                if (request.readyState < 4) {
-//                    statusMessage.innerHTML = message.loading;
-//    
-//                }else if(request.readyState === 4 && request.status == 200) {
-//                    statusMessage.innerHTML = message.succes;
-//    
-//                } else {
-//                    statusMessage.innerHTML = message.failure;
-//                }
-//                
- //           });
-//    
-//            for (let i = 0; i < input.length; i++) {//Очищаем инпут после успешной отправки сообщения
-//                input[i].value = '';
-//            };
-//        });
+  
    
-const form = () => {
+// Получение и отправка форм 
     let message = {
       loading: 'Загрузка...',
-      loadingImg: 'dist/img/ajax-loader.gif',
+//      loadingImg: 'dist/img/ajax-loader.gif',
       success: 'Спасибо! Скоро мы с вами свяжемся',
-      successImg: 'dist/img/smartphone.png',
+//      successImg: 'dist/img/smartphone.png',
       failure: 'Что-то пошло не так...'
     };
   
@@ -233,20 +195,23 @@ const form = () => {
         popapForm = document.querySelector('.popup-form'),
         contactForm = document.querySelector('.contact-form'),
         
-        statusMessage = document.createElement('div'),
-        statusFormImg = document.createElement('img'),
-        statusFormP = document.createElement('p');
-        statusMessage.classList.add('status-message');
+        statusMessage = document.createElement('div');
+//        statusFormImg = document.createElement('img'),
+//        statusFormP = document.createElement('p');
+
+//        statusMessage.classList.add('status-message');
+
+        statusMessage.classList.add('status');
   
-    statusFormImg.classList.add('sFormImg');
-    statusMessage.classList.add('sMessage');
+//    statusFormImg.classList.add('sFormImg');
+//    statusMessage.classList.add('sMessage');
   
     const sendForm = (elem, popap) => {
       elem.addEventListener('submit', (event) => {
         event.preventDefault();
         popap.appendChild(statusMessage);
-        statusMessage.appendChild(statusFormImg);
-        statusMessage.appendChild(statusFormP);
+//        statusMessage.appendChild(statusFormImg);
+//        statusMessage.appendChild(statusFormP);
         
         let formData = new FormData(elem);
   
@@ -261,12 +226,15 @@ const form = () => {
               elem.style.display = 'none';
               if (request.readyState < 4) {
                 resolve();
+                  
               } else if (request.readyState === 4) {
                 if (request.status == 200) {
                   
                   resolve();
+                  
                 } else {
                   reject();
+                  
                 }
   
               }
@@ -279,6 +247,7 @@ const form = () => {
             request.send(JSON.stringify(jsonObject));
           });
         }
+      
   
         const clearInput = () => {
           for (let i = 0; i < input.length; i++) {
@@ -289,15 +258,17 @@ const form = () => {
         postData(formData)
           .then(() => {
             
-            statusFormImg.src = message.loadingImg;
-            statusFormP.textContent = message.loading;
+            //statusFormImg.src = message.loadingImg;
+            //statusFormP.textContent = message.loading;
+            statusMessage.innerHTML = message.loading;
           })
-          .then(() => {
-            statusFormImg.src = message.successImg;
-            statusFormP.textContent = message.success;
+         .then(() => {
+            //statusFormImg.src = message.successImg;
+           //statusFormP.textContent = message.success;
+          statusMessage.innerHTML = message.succes;
           })
-          .catch(() => statusFormP.textContent = message.failures)
-          .then(clearInput);
+          .catch(() => statusMessage.innerHTML = message.failure)
+         .then(clearInput);
   
   
       });
@@ -305,6 +276,6 @@ const form = () => {
   
     sendForm(form, contactForm);
     sendForm(mainForm, popapForm);
-  }
+
 
 });
