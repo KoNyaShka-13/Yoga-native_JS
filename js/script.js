@@ -119,7 +119,7 @@ window.addEventListener('DOMContentLoaded', function() {//Пишем так, ч�
         document.body.style.overflow = '';//Снимаем запрет скроллинга
     });
 
-    //Модальные окна для табов
+    //Модальные окна для табов/
     
     let btn = document.querySelectorAll('.description-btn');
 
