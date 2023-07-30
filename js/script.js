@@ -131,148 +131,147 @@ window.addEventListener('DOMContentLoaded', function() {//Пишем так, ч�
 
     //Форма отправки заявки..
 //
-//    let message = {
-//        loading: 'Загрузка...',
-//        succes: 'Заявка отправлена, мы скоро свяжемся с вами)',
-//        failure: 'Что-то пошло не так...',
-//    };
-//    //Отправка и получение данных от формы подробнее
-//    let form = document.querySelector('.main-form'),
-//        input = form.getElementsByTagName('input'),
-//        statusMessage = document.createElement('div');
-//
-//        statusMessage.classList.add('status');
-//
-//    form.addEventListener('submit', function(event) {//Чтобы действие сработало, нужно ставить его на форму, а не на саму кнопку
-//        event.preventDefault();//Отменяем нормальную работу js, чтобы не обновлялась страница при отправке запроса, в большинстве случаев, отменяют работу в AJAX запросах
-//        form.appendChild(statusMessage);
-//
-//        let request = new XMLHttpRequest();
-//        request.open('POST', 'server.php');
-//        request.setRequestHeader ('Content-Type', 'application/x-www-form-urlencoded');
-//
-//        let formData = new FormData(form);//Переделываем данные в JSON формат
-//        let obj = {};
-//        formData.forEach(function(value, key) {
-//            obj[key] = value;
-//        });
-//        let json = JSON.stringify(obj);
-//
-//       request.send(formData);
-//
-//        request.addEventListener('readystatechange', function() {//Отправка уведомления в зависимости от ситуации
-//            if (request.readyState < 4) {
-//                statusMessage.innerHTML = message.loading;
+    let message = {
+        loading: 'Загрузка...',
+        succes: 'Заявка отправлена, мы скоро свяжемся с вами)',
+        failure: 'Что-то пошло не так...',
+    };
+    //Отправка и получение данных от формы подробнее
+    let form = document.querySelector('.main-form'),
+        input = form.getElementsByTagName('input'),
+        statusMessage = document.createElement('div');
 
-//            }else if(request.readyState === 4 && request.status == 200) {
-//                statusMessage.innerHTML = message.succes;
-//
-//            } else {
-//                statusMessage.innerHTML = message.failure;
-//            }
-//            
-//        });
-//
- //       for (let i = 0; i < input.length; i++) {//Очищаем инпут после успешной отправки сообщения
-//            input[i].value = '';
-//        };
-//    });
+        statusMessage.classList.add('status');
+
+    form.addEventListener('submit', function(event) {//Чтобы действие сработало, нужно ставить его на форму, а не на саму кнопку
+        event.preventDefault();//Отменяем нормальную работу js, чтобы не обновлялась страница при отправке запроса, в большинстве случаев, отменяют работу в AJAX запросах
+        form.appendChild(statusMessage);
+
+        let request = new XMLHttpRequest();
+        request.open('POST', 'server.php');
+        request.setRequestHeader ('Content-Type', 'application/x-www-form-urlencoded');
+
+        let formData = new FormData(form);//Переделываем данные в JSON формат
+        let obj = {};
+        formData.forEach(function(value, key) {
+            obj[key] = value;
+        });
+        let json = JSON.stringify(obj);
+
+       request.send(formData);
+
+        request.addEventListener('readystatechange', function() {//Отправка уведомления в зависимости от ситуации
+            if (request.readyState < 4) {
+                statusMessage.innerHTML = message.loading;
+            }else if(request.readyState === 4 && request.status == 200) {
+                statusMessage.innerHTML = message.succes;
+
+            } else {
+                statusMessage.innerHTML = message.failure;
+            }
+            
+        });
+
+       for (let i = 0; i < input.length; i++) {//Очищаем инпут после успешной отправки сообщения
+            input[i].value = '';
+        };
+    });
 
   
    
 // Получение и отправка форм 
-    let message = {
-      loading: 'Загрузка...',
+//    let message = {
+//      loading: 'Загрузка...',
 //      loadingImg: 'dist/img/ajax-loader.gif',
-      success: 'Спасибо! Скоро мы с вами свяжемся',
+//      success: 'Спасибо! Скоро мы с вами свяжемся',
 //      successImg: 'dist/img/smartphone.png',
-      failure: 'Что-то пошло не так...'
-    };
-  
-    let mainForm = document.querySelector('.main-form'),
-        form = document.querySelector('#form'),
-        input = document.getElementsByTagName('input'),
-        popapForm = document.querySelector('.popup-form'),
-        contactForm = document.querySelector('.contact-form'),
-        
-        statusMessage = document.createElement('div');
+//      failure: 'Что-то пошло не так...'
+//    };
+//  
+//    let mainForm = document.querySelector('.main-form'),
+//        form = document.querySelector('#form'),
+//        input = document.getElementsByTagName('input'),
+//       popapForm = document.querySelector('.popup-form'),
+//        contactForm = document.querySelector('.contact-form'),
+//        
+//        statusMessage = document.createElement('div');
 //        statusFormImg = document.createElement('img'),
 //        statusFormP = document.createElement('p');
-
+//
 //        statusMessage.classList.add('status-message');
-
-        statusMessage.classList.add('status');
-  
+//
+//        statusMessage.classList.add('status');
+//  
 //    statusFormImg.classList.add('sFormImg');
 //    statusMessage.classList.add('sMessage');
-  
-    const sendForm = (elem, popap) => {
-      elem.addEventListener('submit', (event) => {
-        event.preventDefault();
-        popap.appendChild(statusMessage);
+//  
+//    const sendForm = (elem, popap) => {
+//      elem.addEventListener('submit', (event) => {
+//        event.preventDefault();
+//        popap.appendChild(statusMessage);
 //        statusMessage.appendChild(statusFormImg);
 //        statusMessage.appendChild(statusFormP);
-        
-        let formData = new FormData(elem);
-  
-        const postData = (data) => {
-          return new Promise(function (resolve, reject) {
-            let request = new XMLHttpRequest();
-            request.open('POST', 'server.php');
-            request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-  
-            request.onreadystatechange = function () {
-              
-              elem.style.display = 'none';
-              if (request.readyState < 4) {
-                resolve();
-                  
-              } else if (request.readyState === 4) {
-                if (request.status == 200) {
-                  
-                  resolve();
-                  
-                } else {
-                  reject();
-                  
-                }
-  
-              }
-            }
-            let jsonObject = {};
-            
-            for (let [key, value] of data.entries()) {
-              jsonObject[key] = value;
-            }
-            request.send(JSON.stringify(jsonObject));
-          });
-        }
-      
-  
-        const clearInput = () => {
-          for (let i = 0; i < input.length; i++) {
-            if (input[i].classList.contains('tel-number')) input[i].value = '+7('
-            else input[i].value = '';
-          }
-        }
-        postData(formData)
-          .then(() => {
-            
-            //statusFormImg.src = message.loadingImg;
-            //statusFormP.textContent = message.loading;
-            statusMessage.innerHTML = message.loading;
-          })
-         .then(() => {
-            //statusFormImg.src = message.successImg;
-           //statusFormP.textContent = message.success;
-          statusMessage.innerHTML = message.succes;
-          })
-          .catch(() => statusMessage.innerHTML = message.failure)
-         .then(clearInput);
-  
-  
-      });
-    }
+//        
+//        let formData = new FormData(elem);
+//  
+//       const postData = (data) => {
+//          return new Promise(function (resolve, reject) {
+//            let request = new XMLHttpRequest();
+//            request.open('POST', 'server.php');
+//            request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+//  
+//            request.onreadystatechange = function () {
+//              
+//              elem.style.display = 'none';
+//              if (request.readyState < 4) {
+//                resolve();
+//                  
+//              } else if (request.readyState === 4) {
+//                if (request.status == 200) {
+//                  
+//                  resolve();
+//                  
+//                } else {
+//                  reject();
+//                  
+//                }
+//  
+//              }
+//            }
+//            let jsonObject = {};
+//            
+//            for (let [key, value] of data.entries()) {
+ //             jsonObject[key] = value;
+//            }
+//            request.send(JSON.stringify(jsonObject));
+//          });
+//        }
+//      
+//  
+//        const clearInput = () => {
+ //         for (let i = 0; i < input.length; i++) {
+//            if (input[i].classList.contains('tel-number')) input[i].value = '+7('
+//            else input[i].value = '';
+//          }
+//        }
+//        postData(formData)
+//          .then(() => {
+//            
+//            //statusFormImg.src = message.loadingImg;
+//            //statusFormP.textContent = message.loading;
+//            statusMessage.innerHTML = message.loading;
+//          })
+ //        .then(() => {
+//            //statusFormImg.src = message.successImg;
+//           //statusFormP.textContent = message.success;
+//          statusMessage.innerHTML = message.succes;
+//          })
+//          .catch(() => statusMessage.innerHTML = message.failure)
+//         .then(clearInput);
+///  
+//  
+//      });
+//    }
   
     sendForm(form, contactForm);
     sendForm(mainForm, popapForm);
