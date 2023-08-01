@@ -278,7 +278,7 @@ window.addEventListener('DOMContentLoaded', function() {//Пишем так, ч�
     let slideIndex = 1,//Обозначаем, с какого слайда начнется показ, какой слайд будет показным
       slides = document.querySelectorAll('.slider-item'),
       prev = document.querySelector('.prev'),
-      next = documet.querySelector('.next'),
+      next = document.querySelector('.next'),
       dotsWrap = document.querySelector('.slider-dots'),
       dots = document.querySelectorAll('.dot');
 
