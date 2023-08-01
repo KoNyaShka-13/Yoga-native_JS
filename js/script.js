@@ -149,23 +149,24 @@ window.addEventListener('DOMContentLoaded', function() {//Пишем так, ч�
 
         let request = new XMLHttpRequest();
         request.open('POST', 'server.php');
-        request.setRequestHeader ('Content-Type', 'application/x-www-form-urlencoded');
+        //Нижняя строка отправляет просто строки, а мы будем отправлять в JSON-формате
+        //request.setRequestHeader ('Content-Type', 'application/x-www-form-urlencoded');
+      	request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 
         let formData = new FormData(form);//Переделываем данные в JSON формат
         let obj = {};
         formData.forEach(function(value, key) {
             obj[key] = value;
         });
-        let json = JSON.stringify(obj);
+        let json = JSON.stringify(obj);//Превращает обычные данные js в json-формат
 
-       request.send(formData);
+       request.send(json);
 
         request.addEventListener('readystatechange', function() {//Отправка уведомления в зависимости от ситуации
             if (request.readyState < 4) {
                 statusMessage.innerHTML = message.loading;
             }else if(request.readyState === 4 && request.status == 200) {
                 statusMessage.innerHTML = message.succes;
-
             } else {
                 statusMessage.innerHTML = message.failure;
             }
@@ -174,7 +175,7 @@ window.addEventListener('DOMContentLoaded', function() {//Пишем так, ч�
 
        for (let i = 0; i < input.length; i++) {//Очищаем инпут после успешной отправки сообщения
             input[i].value = '';
-        };
+        }
     });
 
   
@@ -273,6 +274,30 @@ window.addEventListener('DOMContentLoaded', function() {//Пишем так, ч�
 //      });
 //    }
   
+// Слайдер
+//Получаем все элементы
+    let slideIndex = 1,//Обозначаем, с какого слайда начнется показ, какой слайд будет показным
+      slides = document.querySelectorAll('.slider-item'),
+      prev = document.querySelector('.prev'),
+      next = documet.querySelector('.next'),
+      dotsWrap = document.querySelector('.slider-dots'),
+      dots = document.querySelectorAll('.dot');
+
+    showSlides(slideIndex);
+
+    function showSlides(n) {
+      //Убираем все лишние слайды и лишние кнопки
+      slides.forEach((item) => item.style.display = 'none');
+      dots.forEach((item) => item.classList.remove('dot-active'));
+
+      slides[slideIndex - 1].style.display = 'block';
+      dots[slideIndex - 1].classList.add('dot-active');
+    }
+
+
+
+
+
     sendForm(form, contactForm);
     sendForm(mainForm, popapForm);
 
