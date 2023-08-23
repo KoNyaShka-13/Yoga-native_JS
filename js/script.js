@@ -282,7 +282,7 @@ let message = {
 
   sendForm(form, contactForm);
   sendForm(mainForm, popapForm);
-
+/
 //    let message = {
 //        loading: 'Загрузка...',
 //        succes: 'Заявка отправлена, мы скоро свяжемся с вами)',
