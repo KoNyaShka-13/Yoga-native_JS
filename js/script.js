@@ -348,7 +348,7 @@ showSlides(slideIndex);
 
 function showSlides(n) {
 
-  //Чтобы слайды были зациклены 
+  //Чтобы слайды были зациклены  
   if (n > slides.length) {
       slideIndex = 1;
   }
